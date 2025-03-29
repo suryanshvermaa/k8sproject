@@ -20,6 +20,9 @@ importers:
       cors:
         specifier: ^2.8.5
         version: 2.8.5
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
       express:
         specifier: ^4.21.2
         version: 4.21.2
@@ -45,9 +48,6 @@ importers:
       '@types/node':
         specifier: ^22.13.14
         version: 22.13.14
-      dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
       nodemon:
         specifier: ^3.1.9
         version: 3.1.9

@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - my-app-network
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    networks:
+      - my-app-network
+    volumes:
+      - ./PostgresData:/var/lib/postgresql/data
+    
+  redis:
+    image: redis
+    environment:
+      REDIS_PASSWORD: password
+    networks:
+      - my-app-network
+    volumes:
+      - ./RedisData:/data
+    command: ["redis-server", "--requirepass", "password"]
+
+networks:
+  my-app-network:
+    driver: bridge
+  

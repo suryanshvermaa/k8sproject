@@ -1,0 +1,8 @@
+.env
+.gitignore
+Dockerfile
+docker-compose.yml
+node_modules
+.dockerignore
+RedisData
+PostgresData
