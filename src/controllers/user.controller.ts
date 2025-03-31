@@ -2,7 +2,7 @@ import { NextFunction, Request,Response } from "express";
 import { AppError } from "../middlewares/error";
 import prisma from "../config/db";
 import { response } from "../middlewares/response";
-import { comparePassword, generateAuthToken } from "../auth/tokens";
+import { comparePassword, generateAuthToken, hashedPassword } from "../auth/tokens";
 
 /**
  * @desc    Signup a new user
@@ -19,12 +19,13 @@ export const signup=async(req:Request,res:Response,next:NextFunction)=>{
             email
         }
     })
+    const hashPassword=await hashedPassword(password);
     if(emailExist) return next(new AppError("Email already exists",400));
     const user=await prisma.user.create({
         data:{
             name,
             email,
-            password,
+            password:String(hashPassword),
         }
     })
     const token=await generateAuthToken({
@@ -57,9 +58,9 @@ export const login=async(req:Request,res:Response,next:NextFunction)=>{
                 email
             }
         })
-        if(!user) throw new AppError("Invalid credentials",401);
-        const isAuthenticated=comparePassword(password,user.password);
-        if(!isAuthenticated) throw new AppError("Invalid credentials",401);
+        if(!user)  return next(new AppError("Invalid credentials",401));
+        const isAuthenticated=await comparePassword(password,user.password); 
+        if(!isAuthenticated) return next(new AppError("Invalid credentials",401));
         const token=await generateAuthToken({
             userId:user.id,
             email:user.email
