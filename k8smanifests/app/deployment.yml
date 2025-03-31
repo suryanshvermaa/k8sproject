@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  my-app
+  labels:
+    name:  my-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name:  my-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name:  my-app
+    spec:
+      containers:
+      - image: suryanshvermaa/vs-code:1.0.1
+        name:  my-name     
+        ports:
+        - containerPort:  6901
+        env:
+          - name: "VNC_PW"
+            value: "suryansh"
+        
+      restartPolicy: Always

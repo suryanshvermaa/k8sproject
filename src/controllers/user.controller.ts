@@ -12,24 +12,23 @@ import { comparePassword, generateAuthToken } from "../auth/tokens";
 export const signup=async(req:Request,res:Response,next:NextFunction)=>{
    try {
     const {email,name,password}=req.body;
-    if(!email||!name||!password) throw new AppError("All fields are required",400);
-    if(String(password).length<8)  throw new AppError("Password length should be 8 more that 8",400);
+    if(!email||!name||!password) return next(new AppError("All fields are required",400));
+    if(String(password).length<8)   return next(new AppError("Password length should be 8 more that 8",400));
     const emailExist=await prisma.user.findUnique({
         where:{
             email
         }
     })
-    if(emailExist) throw new AppError("Email already exists",400);
+    if(emailExist) return next(new AppError("Email already exists",400));
     const user=await prisma.user.create({
         data:{
             name,
             email,
             password,
-            
         }
     })
     const token=await generateAuthToken({
-        id:user.id,
+        userId:user.id,
         email:user.email
     });
     response(res,201,"User created successfully",{
@@ -62,7 +61,7 @@ export const login=async(req:Request,res:Response,next:NextFunction)=>{
         const isAuthenticated=comparePassword(password,user.password);
         if(!isAuthenticated) throw new AppError("Invalid credentials",401);
         const token=await generateAuthToken({
-            id:user.id,
+            userId:user.id,
             email:user.email
         });
         response(res,200,"User logged in successfully",{

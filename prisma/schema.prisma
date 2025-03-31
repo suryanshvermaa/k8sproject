@@ -19,11 +19,11 @@ model User{
 model VM{
   id Int @id @default(autoincrement())
   name String
-  status String @default("stopped")
+  status String @default("active")
   created_at DateTime @default(now())
   userId Int
   user User @relation("UserVMs",fields: [userId], references: [id])
-  password String?
+  password String
   url String
   duration Int
   vm String

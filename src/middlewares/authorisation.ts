@@ -7,9 +7,10 @@ export interface AuthRequest extends Request{
 }
 export const authMiddleware=async(req:AuthRequest,res:Response,next:NextFunction)=>{
     const authToken=req.body.authToken||req.query.authToken;
+    if(!authToken) return next(new AppError("Unathorised",400));
     const user=await verifyAndDecodeAuthToken(authToken);
-    if(!user) next(new AppError("Unauthorised",401));
+    if(!user) return next(new AppError("Unauthorised",401));
     const {userId}=JSON.parse(JSON.stringify(user));
     req.user=userId;
-    next();
+    return next();
 }

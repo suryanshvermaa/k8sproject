@@ -1,9 +1,9 @@
 import {Router} from 'express';
-import { createVM } from '../controllers/vm.controller';
 import { authMiddleware } from '../middlewares/authorisation';
+import { launchVM } from '../controllers/vm.controller';
 const vmRouter=Router();
 
 vmRouter
-.post('/createVM',authMiddleware,createVM)
+.post('/createVM',authMiddleware,launchVM)
 
 export default vmRouter;

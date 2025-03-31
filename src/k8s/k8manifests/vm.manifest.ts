@@ -11,7 +11,7 @@ export const vmDeploymentManifest=async(image:string,vmId:string,password:string
         apiVersion: "apps/v1",
         kind:"Deployment",
         metadata:{
-            name:"vm-deployment",
+            name:vmId,
             labels:{
                 app:vmId,
             },
@@ -37,12 +37,12 @@ export const vmDeploymentManifest=async(image:string,vmId:string,password:string
                             image:image,
                             ports:[
                                 {
-                                    containerPort:6379,
+                                    containerPort:6901,
                                 }
                             ],
                             env:[
                                 {
-                                    name:"password",
+                                    name:"VNC_PW",
                                     value:password,
                                 }
                             ]
@@ -77,8 +77,8 @@ export const vmServiceManifest=async(vmId:string)=>{
             ports:[
                 {
                     protocol:"TCP",
-                    port:6379,
-                    targetPort:6379,
+                    port:6901,
+                    targetPort:6901,
                 }
             ]
         }

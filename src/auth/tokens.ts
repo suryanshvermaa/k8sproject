@@ -17,7 +17,7 @@ export const verifyAndDecodeAuthToken=(token:string)=>{
     return new Promise(async(resolve,reject)=>{
         try {
             const decodedToken=await jwt.verify(token,process.env.JWT_SECRET!);
-            resolve(token);
+            resolve(decodedToken);
         } catch (error:any) {
             reject(error);
         }
