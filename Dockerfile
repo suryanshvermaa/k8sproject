@@ -14,7 +14,7 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 COPY --from=builder /app/dist/ /app/dist/
 COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/prisma/schema.prisma /app/prisma/schema.prisma
+COPY --from=builder /app/prisma/ /app/prisma/
 
 RUN npm install --omit=dev
 

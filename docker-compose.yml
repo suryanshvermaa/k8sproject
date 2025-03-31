@@ -1,15 +1,4 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
-      - redis
-    networks:
-      - my-app-network
   postgres:
     image: postgres
     environment:
@@ -20,6 +9,9 @@ services:
       - my-app-network
     volumes:
       - ./PostgresData:/var/lib/postgresql/data
+      - ./initDbScript/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
     
   redis:
     image: redis
@@ -30,6 +22,8 @@ services:
     volumes:
       - ./RedisData:/data
     command: ["redis-server", "--requirepass", "password"]
+    ports:
+      - 6379:6379
 
 networks:
   my-app-network:
