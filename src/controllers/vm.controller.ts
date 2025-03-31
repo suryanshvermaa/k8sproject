@@ -22,7 +22,8 @@ export const launchVM=async(req:AuthRequest,res:Response,next:NextFunction)=>{
     if(!vmId || !password||!duration||!vm||!image){
         return next(new AppError("Please provide all required fields",400));
     }
-    const url=process.env.NODE_ENV=="dev"?`vm.suryanshverma.local:6901`:`${vmId}.suryanshverma.site:6901`;
+    const url="https://vm.suryanshverma.local:6901";
+    // const url=`https://${vmId}.suryanshverma.site:6901`; //for production
     const createdVm=await prisma.vM.create({
         data:{
             name:vmId,
@@ -36,6 +37,12 @@ export const launchVM=async(req:AuthRequest,res:Response,next:NextFunction)=>{
     await createVm({vmId,image,password});
     setTimeout(async()=>{
         await deleteVm(vmId);
+        const deleteVM=await prisma.vM.deleteMany({
+            where:{
+                name:vmId
+            }
+        });
+        console.log(deleteVM);
     },1000*60*Number(createdVm.duration));
     response(res,201,"vm created successfully",{name:createdVm.id,url:createdVm.url,duration:createdVm.duration});
    } catch (error) {
