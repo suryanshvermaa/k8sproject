@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  mynginxapp
+  labels:
+    name:  mynginxapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name:  mynginxapp
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name:  mynginxapp
+    spec:
+      containers:
+      - image: nginx
+        name:  my-name     
+        ports:
+        - containerPort:  80
+      restartPolicy: Always
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  mynginxapp
+spec:
+  selector:
+    name: mynginxapp
+  type: ClusterIP
+  ports:
+  - name: mynginxapp
+    port: 80
+    targetPort: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mynginxappingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /nginx
+        pathType: Prefix
+        backend:
+          service:
+            name: mynginxapp
+            port:
+              number: 80
+

@@ -3,3 +3,4 @@ node_modules
 RedisData
 PostgresData
 dist
+pnpm-lock.yml

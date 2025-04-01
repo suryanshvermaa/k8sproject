@@ -6,3 +6,10 @@ node_modules
 .dockerignore
 RedisData
 PostgresData
+dist
+k8s_local
+initDbScript
+vm-app-frontend
+k8s.md 
+readme.md
+pnpm-lock.yml

@@ -4,4 +4,4 @@ metadata:
   name: tcp-services
   namespace: ingress-nginx
 data:
-  "6901": "default/my-app:6901"  # TCP passthrough mapping
+  "6901": "default/my-app:6901"   # <port>: <namespace>/<service>:<service-port>
