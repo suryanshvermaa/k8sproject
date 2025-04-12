@@ -6,14 +6,14 @@ import { AuthRequest } from "../middlewares/authorisation";
 import prisma from "../config/db";
 import "dotenv/config";
 
-// interface VMTypes={
-//     image: "suryanshvermaa/vs-code:1.0.1" | "suryanshvermaa/ubnutu:1.0.0";
-//     password: string;
-//     url:string;
-//     duration:number //in minutes
-//     vm: "vscode" | "ubuntu"
-//     name:string
-// }
+// Only for local env----------------------
+const devLoacalMapping={
+    "suryanshvermaa/centos:1.0.0" : "centos.suryanshverma.local",
+    "suryanshvermaa/vs-code:1.0.1": "vscode.suryanshverma.local",
+    "suryanshvermaa/chrome:1.0.0": "chrome.suryanshverma.local",
+    "suryanshvermaa/ubuntu:1.0.0": "ubuntu.suryanshverma.local",
+}
+//------------------------------------------
  
 export const launchVM=async(req:AuthRequest,res:Response,next:NextFunction)=>{
    try {
@@ -22,9 +22,32 @@ export const launchVM=async(req:AuthRequest,res:Response,next:NextFunction)=>{
     if(!vmId || !password||!duration||!vm||!image){
         return next(new AppError("Please provide all required fields",400));
     }
-    const url="https://vscode.suryanshverma.local";
-    const ingressPath="vscode.suryanshverma.local";
+    //for only dev environment
+    let url=`https://${devLoacalMapping["suryanshvermaa/vs-code:1.0.1"]}:6901`;
+    let ingressPath=devLoacalMapping["suryanshvermaa/vs-code:1.0.1"];
+    switch(image){
+        case "suryanshvermaa/vs-code:1.0.1":
+            url=`https://${devLoacalMapping["suryanshvermaa/vs-code:1.0.1"]}:6901`;
+            ingressPath=devLoacalMapping["suryanshvermaa/vs-code:1.0.1"]
+            break;
+        case "suryanshvermaa/ubuntu:1.0.0":
+            url=`https://${devLoacalMapping["suryanshvermaa/ubuntu:1.0.0"]}:6901`;
+            ingressPath=devLoacalMapping["suryanshvermaa/ubuntu:1.0.0"]
+            break;
+        case "suryanshvermaa/chrome:1.0.0":
+            url=`https://${devLoacalMapping["suryanshvermaa/chrome:1.0.0"]}:6901`;
+            ingressPath=devLoacalMapping["suryanshvermaa/chrome:1.0.0"]
+            break;
+        case "suryanshvermaa/centos:1.0.0":
+            url=`https://${devLoacalMapping["suryanshvermaa/centos:1.0.0"]}:6901`;
+            ingressPath=devLoacalMapping["suryanshvermaa/centos:1.0.0"]
+            break;
+        default:
+            return next(new AppError("image is not available",400));
+    }
+    
     // const url=`https://${vmId}.suryanshverma.site:6901`; //for production
+    // const ingressPath=${vmId}.suryanshverma.site // for production
     const createdVm=await prisma.vM.create({
         data:{
             name:vmId,

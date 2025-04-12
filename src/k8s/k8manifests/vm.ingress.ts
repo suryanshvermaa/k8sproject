@@ -2,6 +2,7 @@ import { V1Ingress } from "@kubernetes/client-node"
 import "dotenv/config"
 
 export const ingressManifest=async(vmId:string,url:string)=>{
+    console.log(url);
     const ingManifest:V1Ingress={
         apiVersion: "networking.k8s.io/v1",
         kind: "Ingress",

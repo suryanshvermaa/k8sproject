@@ -50,6 +50,7 @@ const VM = () => {
     };
     const handleVMLaunch=async()=>{
         try {
+            setLaunching(true);
             const apiObj={
                 vm:VM?.name,
                 image:VM?.image,
@@ -63,10 +64,10 @@ const VM = () => {
                 theme:"dark",
                 closeButton:true
             })
-            setLaunching(true);
             setTimeout(()=>{
-                location.href=res.data.data.url+":"+res.data.data.port;
-            },15*1000)
+                location.href=res.data.data.url;
+                setLaunching(false);
+            },10*1000);
         } catch (error:any) {
             console.log(error);
             toast.error(error?.response?.data?.message,{
@@ -74,9 +75,6 @@ const VM = () => {
                 theme:"dark",
                 closeButton:true
             })
-            setLaunching(false);
-        }finally{
-            // setLaunching(false);
         }
     }
 

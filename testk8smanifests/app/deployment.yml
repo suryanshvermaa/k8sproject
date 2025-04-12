@@ -20,7 +20,11 @@ spec:
         name:  my-app
     spec:
       containers:
-      - image: suryanshvermaa/vs-code:1.0.1
+      # suryanshvermaa/centos:1.0.0
+      # suryanshvermaa/chrome:1.0.0
+      # suryanshvermaa/vs-code:1.0.1
+      # suryanshvermaa/ubuntu:1.0.0 
+      - image: suryanshvermaa/centos:1.0.0
         name:  my-name     
         ports:
         - containerPort:  6901

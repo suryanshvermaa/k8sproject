@@ -23,13 +23,11 @@ export const createDeployment= async(deployment:Deployment)=>{
     const namespace = "vm-namespace";
     const dep:V1Deployment=await vmDeploymentManifest(image, vmId, password);
     const res=await k8sApi.createNamespacedDeployment({namespace:namespace, body:dep});
-    console.log("deployment:",res);
 }
 
 export const deleteDeployment= async(vmId:string)=>{
     const namespace = "vm-namespace"; 
     const res=await k8sApi.deleteNamespacedDeployment({namespace:namespace,name:vmId});
-    console.log("deployment:",res);
 }
 
 export const createService=async(service:Service)=>{
@@ -37,25 +35,21 @@ export const createService=async(service:Service)=>{
     const namespace = "vm-namespace";
     const svc=await vmServiceManifest(vmId)
     const res=await k8sCoreApi.createNamespacedService({namespace:namespace,body:svc});
-    console.log("service:",res);
 }
 
 export const deleteService=async(vmId:string)=>{
     const namespace="vm-namespace";
     const res=await k8sCoreApi.deleteNamespacedService({namespace:namespace,name:vmId});
-    console.log("service:",res);
 }
 
 export const createIngress=async(ingress:Ingress)=>{
     const {vmId,url}=ingress;
     const namespace="vm-namespace";
     const ing=await ingressManifest(vmId,url);
-    const res=await k8sNetworkingApi.createNamespacedIngress({namespace:namespace,body: ing});
-    console.log("ingress:",res);    
+    const res=await k8sNetworkingApi.createNamespacedIngress({namespace:namespace,body: ing});  
 }
 
 export const deleteIngress=async(vmId:string)=>{
     const namespace="vm-namespace";
     const res=await k8sNetworkingApi.deleteNamespacedIngress({namespace:namespace,name:vmId});
-    console.log("ingress:",res);
 }
