@@ -4,3 +4,4 @@ RedisData
 PostgresData
 dist
 pnpm-lock.yml
+db_data

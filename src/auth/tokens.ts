@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 import "dotenv/config";
+import bcrypt from 'bcrypt';
+
 
 export const generateAuthToken=(data:object):Promise<string|string>=>{
     return new Promise(async(resolve,reject)=>{

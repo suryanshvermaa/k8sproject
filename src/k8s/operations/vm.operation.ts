@@ -4,17 +4,18 @@ import { vmDeploymentManifest, vmServiceManifest } from "../k8manifests/vm.manif
 import { ingressManifest } from "../k8manifests/vm.ingress";
 
 interface Deployment{
-    vmId: string
-    image: string
-    password: string
+    vmId: string;
+    image: string;
+    password: string;
 }
 
 interface Service{
-    vmId: string
+    vmId: string;
 }
 
 interface Ingress{
-    vmId: string
+    vmId: string;
+    url: string;
 }
 
 export const createDeployment= async(deployment:Deployment)=>{
@@ -46,9 +47,9 @@ export const deleteService=async(vmId:string)=>{
 }
 
 export const createIngress=async(ingress:Ingress)=>{
-    const {vmId}=ingress;
+    const {vmId,url}=ingress;
     const namespace="vm-namespace";
-    const ing=await ingressManifest(vmId);
+    const ing=await ingressManifest(vmId,url);
     const res=await k8sNetworkingApi.createNamespacedIngress({namespace:namespace,body: ing});
     console.log("ingress:",res);    
 }

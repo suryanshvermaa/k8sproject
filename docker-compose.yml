@@ -8,22 +8,22 @@ services:
     networks:
       - my-app-network
     volumes:
-      - ./PostgresData:/var/lib/postgresql/data
+      - ./db_data:/var/lib/postgresql/data
       - ./initDbScript/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
     
-  redis:
-    image: redis
-    environment:
-      REDIS_PASSWORD: password
-    networks:
-      - my-app-network
-    volumes:
-      - ./RedisData:/data
-    command: ["redis-server", "--requirepass", "password"]
-    ports:
-      - 6379:6379
+  # redis:
+  #   image: redis
+  #   environment:
+  #     REDIS_PASSWORD: password
+  #   networks:
+  #     - my-app-network
+  #   volumes:
+  #     - ./RedisData:/data
+  #   command: ["redis-server", "--requirepass", "password"]
+  #   ports:
+  #     - 6379:6379
 
 networks:
   my-app-network:

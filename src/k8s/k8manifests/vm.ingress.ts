@@ -1,7 +1,7 @@
 import { V1Ingress } from "@kubernetes/client-node"
 import "dotenv/config"
 
-export const ingressManifest=async(vmId:string)=>{
+export const ingressManifest=async(vmId:string,url:string)=>{
     const ingManifest:V1Ingress={
         apiVersion: "networking.k8s.io/v1",
         kind: "Ingress",
@@ -13,7 +13,7 @@ export const ingressManifest=async(vmId:string)=>{
             ingressClassName: "nginx",
             rules: [
                 {
-                    host: `vm.${process.env.hostName!}`, //this is only for local testing, in production it will be the dynamic domain name of the server like ${vmId}.example.com
+                    host: url,
                     http:{
                         paths:[
                             {

@@ -4,6 +4,7 @@ interface VM{
     vmId: string
     image: string
     password: string
+    url: string
 }
 
 export const createVm= async (vm:VM) =>{
@@ -14,7 +15,7 @@ export const createVm= async (vm:VM) =>{
         vmId
     });
     await createService({vmId})
-    await createIngress({vmId});
+    await createIngress({vmId,url:vm.url});
 }
 
 export const deleteVm=async(vmId:string)=>{

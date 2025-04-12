@@ -65,8 +65,8 @@ const VM = () => {
             })
             setLaunching(true);
             setTimeout(()=>{
-                location.href=res.data.data.url;
-            },30*1000)
+                location.href=res.data.data.url+":"+res.data.data.port;
+            },15*1000)
         } catch (error:any) {
             console.log(error);
             toast.error(error?.response?.data?.message,{

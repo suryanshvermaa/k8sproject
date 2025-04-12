@@ -26,5 +26,5 @@ model VM{
   password String
   url String
   duration Int
-  vm String
+  vm String?
 }
