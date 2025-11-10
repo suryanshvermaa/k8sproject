@@ -16,7 +16,6 @@ metadata:
     # NOTE: configuration-snippet was intentionally omitted (cluster blocks it).
 spec:
   ingressClassName: nginx
-spec:
   rules:
     - host: vm.suryanshverma.live
       http:
