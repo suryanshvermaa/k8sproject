@@ -8,7 +8,19 @@ export const ingressManifest=async(vmId:string,url:string)=>{
         kind: "Ingress",
         metadata:{
             name: vmId,
-            namespace:"vm-namespace"
+            namespace:"vm-namespace",
+            annotations:{
+                // WebSocket & long-lived connection friendly settings
+                "nginx.ingress.kubernetes.io/proxy-http-version": "1.1",
+                "nginx.ingress.kubernetes.io/proxy-read-timeout": "3600",
+                "nginx.ingress.kubernetes.io/proxy-send-timeout": "3600",
+                "nginx.ingress.kubernetes.io/proxy-buffering": "off",
+                // Upstream (service) speaks HTTPS (TLS); tell ingress to use HTTPS to backend.
+                "nginx.ingress.kubernetes.io/backend-protocol": "HTTPS",
+                // Disable cert verification for self-signed upstream (remove in production and use proxy-ssl-secret instead).
+                "nginx.ingress.kubernetes.io/proxy-ssl-verify": "off",
+                // NOTE: configuration-snippet was intentionally omitted (cluster blocks it).
+            }
         },
         spec:{
             ingressClassName: "nginx",
