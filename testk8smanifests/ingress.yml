@@ -4,10 +4,21 @@ metadata:
   name: my-app-ingress
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    # WebSocket & long-lived connection friendly settings
+    nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-buffering: "off"
+    # Upstream (service) speaks HTTPS (TLS); tell ingress to use HTTPS to backend.
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    # Disable cert verification for self-signed upstream (remove in production and use proxy-ssl-secret instead).
+    nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
+    # NOTE: configuration-snippet was intentionally omitted (cluster blocks it).
+spec:
+  ingressClassName: nginx
 spec:
   rules:
-    - host: test.suryanshverma.local
+    - host: vm.suryanshverma.live
       http:
         paths:
           - path: /
