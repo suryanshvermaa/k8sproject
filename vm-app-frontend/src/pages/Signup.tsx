@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import { api } from "../lib/api";
 import { ToastContainer, toast } from "react-toastify";
 import {useCookies} from "react-cookie";
 import {Link, useNavigate} from "react-router-dom";
@@ -21,7 +21,7 @@ const Signup = () => {
       const handleSignUp=async(e:React.FormEvent<HTMLFormElement>)=>{
         try {
             e.preventDefault();
-            const res=await axios.post('http://localhost:3000/api/v1/signup',{...signupData});
+            const res=await api.post('/api/v1/signup',{...signupData});
             const date = new Date();
             date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
             setCookie("authToken",res.data.data.authToken,{expires:date});

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { api } from '../lib/api';
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link, useNavigate } from 'react-router-dom';
@@ -21,7 +21,7 @@ const Login = () => {
       const handleLogin=async(e:React.FormEvent<HTMLFormElement>)=>{
         try {
             e.preventDefault();
-            const res=await axios.post('http://localhost:3000/api/v1/login',{...loginData});
+            const res=await api.post('/api/v1/login',{...loginData});
             const date = new Date();
             date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
             setCookie("authToken",res.data.data.authToken,{expires:date});

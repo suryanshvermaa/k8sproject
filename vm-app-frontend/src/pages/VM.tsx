@@ -1,7 +1,7 @@
 import { useState } from "react";
 import VMLaunchLoader from "../components/VMLaunchLoader";
 import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
+import { api } from "../lib/api";
 import { useCookies } from "react-cookie";
 
 export interface IVM{
@@ -58,7 +58,7 @@ const VM = () => {
                 password:VM?.password,
                 authToken:cookies.authToken
             }
-            const res=await axios.post("http://localhost:3000/vm/createVM",apiObj);
+            const res=await api.post("/vm/createVM",apiObj);
             await toast.success(res.data.message,{
                 position:"bottom-right",
                 theme:"dark",
