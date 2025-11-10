@@ -8,7 +8,8 @@ services:
     networks:
       - my-app-network
     volumes:
-      - ./db_data:/var/lib/postgresql/data
+      # Postgres 18+: mount the parent dir, not /var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
       - ./initDbScript/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
@@ -28,4 +29,8 @@ services:
 networks:
   my-app-network:
     driver: bridge
+
+volumes:
+  pgdata:
+    driver: local
   
