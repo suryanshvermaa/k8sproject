@@ -1,6 +1,6 @@
 import { useState } from "react";
 import VMLaunchLoader from "../components/VMLaunchLoader";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { api } from "../lib/api";
 import { useCookies } from "react-cookie";
 
@@ -81,13 +81,12 @@ const VM = () => {
     if(launching&&VM) return <VMLaunchLoader vm={VM}/>
     else return (
         <div className="text-center p-[20px]">
-            {/* <ToastContainer/> */}
-            <h1 className="text-3xl font-semibold m-5">Launch Virtual Machines</h1>
-            <div className="flex justify-center gap-[20px] flex-wrap">
+            <h1 className="text-3xl font-extrabold m-5 gradient-text">Launch Virtual Machines</h1>
+            <div className="flex justify-center gap-5 flex-wrap">
             {virtualMachines.map((vm) => (
                 <div
                 key={vm.name}
-                className="border border-gray-300 min-w-44 rounded-lg p-4 text-center"
+                className="border border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-gray-900/70 min-w-44 rounded-lg p-4 text-center shadow card-hover"
                 >
                 <img
                     src={vm.logo}
@@ -97,7 +96,7 @@ const VM = () => {
                 <h3 className="mt-2 text-lg font-medium">{vm.name}</h3>
                 <button 
                     onClick={() => handleLaunch(vm)}
-                    className="mt-3 px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 cursor-pointer"
+                    className="mt-3 px-3 py-2 rounded-md text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 cursor-pointer"
                 >
                     Launch
                 </button>
@@ -106,9 +105,9 @@ const VM = () => {
             </div>
 
             {VM && VM.name && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md">
-                <h2 className="text-2xl font-semibold mb-4">Launch {VM.name}</h2>
+            <div className="fixed inset-0 bg-black/60 flex justify-center items-center">
+                <div className="glass-card p-6 w-[90%] max-w-md">
+                <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Launch {VM.name}</h2>
                 <div className="flex relative w-full  justify-center items-center py-5">
                     <img src={VM.logo} alt={VM.name} className="w-16 h-16 object-contain" />
                 </div>
@@ -116,7 +115,7 @@ const VM = () => {
                     <input
                     type="number"
                     id="duration"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2"
+                    className="mt-1 block w-full border border-gray-300 dark:border-gray-700 bg-white/60 dark:bg-gray-800/60 text-gray-900 dark:text-gray-100 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2"
                     onChange={(e) => {
                         const duration = Number(e.target.value) || 0;
                         setVM({ ...VM, duration, price: duration*1.4});
@@ -130,7 +129,7 @@ const VM = () => {
                     <input
                     type="password"
                     id="password"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2"
+                    className="mt-1 block w-full border border-gray-300 dark:border-gray-700 bg-white/60 dark:bg-gray-800/60 text-gray-900 dark:text-gray-100 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2"
                     onChange={(e) => {
                         setVM({ ...VM, password:e.target.value});
                     }}
@@ -138,28 +137,27 @@ const VM = () => {
                     value={VM.password}
                     />
                 </div>
-                <h1 className="text-gray-600 font-mono">User: kasm_user  (bydefault)</h1>
+                <h1 className="text-gray-600 dark:text-gray-300 font-mono">User: kasm_user  (bydefault)</h1>
                 {VM.duration && (
-                    <p className="text-lg font-mono text-gray-700 mb-4">
+                    <p className="text-lg font-mono text-gray-700 dark:text-gray-300 mb-4">
                         Price: Rs:{VM.price?.toFixed(4)}
                     </p>
                 )}
                 <div className="flex justify-between w-full gap-4 mt-3">
                     <button
                     onClick={() => setVM(null)}
-                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+                    className="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded-md hover:bg-gray-400 dark:hover:bg-gray-600"
                     >
                     Cancel
                     </button>
                     <button
                     onClick={handleVMLaunch}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                    className="px-4 py-2 text-white rounded-md bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600"
                     >
                     Launch Machine
                     </button>
                 </div>
                 </div>
-                <ToastContainer/>
             </div>
             )}
         </div>
