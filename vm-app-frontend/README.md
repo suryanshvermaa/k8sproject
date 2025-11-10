@@ -1,4 +1,4 @@
-# VM App Frontend (Vite + React + TS)
+# VM Launchpad Frontend (Vite + React + TS)
 
 ## Runtime configuration
 

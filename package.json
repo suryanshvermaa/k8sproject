@@ -1,7 +1,7 @@
 {
-  "name": "redis",
+  "name": "vm-launchpad",
   "version": "1.0.0",
-  "description": "",
+  "description": "VM Launchpad backend – Express + Prisma API to spin up ephemeral VMs on Kubernetes.",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",

@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.0.17",
+    "name": "vm-launchpad-frontend",
+    "version": "0.1.0",
     "axios": "^1.8.4",
+    "description": "VM Launchpad frontend – React + Vite dark themed UI to create ephemeral Kubernetes VMs.",
     "react": "^19.0.0",
     "react-cookie": "^8.0.1",
     "react-dom": "^19.0.0",
